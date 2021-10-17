@@ -7,7 +7,7 @@ const std::string GLOB_dimensionnames[NUM_DIMS] = { "width", "scheduling",
 		"l1block", "dl1sets", "dl1assoc", "il1sets", "il1assoc", "ul2sets",
 		"ul2block", "ul2assoc", "replacepolicy", "fpwidth", "branchsettings",
 		"ras", "btb", "dl1lat", "il1lat", "ul2lat" };
-const unsigned int GLOB_dimensioncardinality[NUM_DIMS] = { 4, 2, 1, 9, 3, 9, 3,
+const unsigned int GLOB_dimensioncardinality[NUM_DIMS] = { 4, 2, 4, 9, 3, 9, 3,
 		10, 4, 5, 3, 4, 5, 4, 5, 10, 10, 10 };
 const std::string GLOB_fields[7] = { "sim_num_insn ", "sim_cycle ",
 		"il1.accesses ", "dl1.accesses ", "ul2.accesses ", "ul2.misses ",

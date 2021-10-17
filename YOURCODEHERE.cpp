@@ -31,6 +31,9 @@ using namespace std;
 unsigned int currentlyExploringDim = 0;
 bool currentDimDone = false;
 bool isDSEComplete = false;
+bool traversalList[15] = { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false };
+bool finishedState[15] = { true, true, true, true, true, true, true, true, true, true, true, true, true, true, true };
+int dimesionOrderMap[15] = { 2,3,4,5,6,7,8,9,10,12,13,14,11,0,1 }; // For Cache -> BP -> FPU -> CORE
 
 /*
  * Given a half-baked configuration containing cache properties, generate
@@ -94,8 +97,7 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 
 	std::string nextconfiguration = currentconfiguration;
 	// Continue if proposed configuration is invalid or has been seen/checked before.
-	while (!validateConfiguration(nextconfiguration) ||
-		GLOB_seen_configurations[nextconfiguration]) {
+	while (!validateConfiguration(nextconfiguration) || GLOB_seen_configurations[nextconfiguration]) {
 
 		// Check if DSE has been completed before and return current
 		// configuration.
@@ -114,26 +116,31 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 
 		// Fill in the dimensions already-scanned with the already-selected best
 		// value.
-		for (int dim = 0; dim < currentlyExploringDim; ++dim) {
+		for (int dim = 0; dim < dimesionOrderMap[currentlyExploringDim]; ++dim) {
 			ss << extractConfigPararm(bestConfig, dim) << " ";
 		}
 
 		// Handling for currently exploring dimension. This is a very dumb
 		// implementation.
-		int nextValue = extractConfigPararm(nextconfiguration,
-				currentlyExploringDim) + 1;
+		int nextValue = extractConfigPararm(nextconfiguration, dimesionOrderMap[currentlyExploringDim]) + 1;
 
-		if (nextValue >= GLOB_dimensioncardinality[currentlyExploringDim]) {
-			nextValue = GLOB_dimensioncardinality[currentlyExploringDim] - 1;
-			currentDimDone = true;
+		if (nextValue >= GLOB_dimensioncardinality[dimesionOrderMap[currentlyExploringDim]]) {
+			nextValue = GLOB_dimensioncardinality[dimesionOrderMap[currentlyExploringDim]] - 1;
+			//currentDimDone = true;
+			traversalList[dimesionOrderMap[currentlyExploringDim]] = true;
 		}
 
 		ss << nextValue << " ";
 
-		// Fill in remaining independent params with 0.
-		for (int dim = (currentlyExploringDim + 1);
-				dim < (NUM_DIMS - NUM_DIMS_DEPENDENT); ++dim) {
-			ss << "0 ";
+		// // Fill in remaining independent params with 0.
+		// for (int dim = (currentlyExploringDim + 1);
+		// 		dim < (NUM_DIMS - NUM_DIMS_DEPENDENT); ++dim) {
+		// 	ss << "0 ";
+		// }
+
+		// Fill in the dimensions already-scanned with the already-selected best value.
+		for (int dim = dimesionOrderMap[currentlyExploringDim] + 1; dim < NUM_DIMS; ++dim) {
+			ss << extractConfigPararm(bestConfig, dim) << " ";
 		}
 
 		//
@@ -149,14 +156,18 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 		// Configuration is ready now.
 		nextconfiguration = ss.str();
 
-		// Make sure we start exploring next dimension in next iteration.
-		if (currentDimDone) {
-			currentlyExploringDim++;
-			currentDimDone = false;
-		}
+		// // Make sure we start exploring next dimension in next iteration.
+		// if (traversalList[dimesionOrderMap[currentlyExploringDim]]) {
+		// 	currentlyExploringDim++;
+		// 	currentDimDone = false;
+		// }
+
+		// // Signal that DSE is complete after this configuration.
+		// if (currentlyExploringDim == (NUM_DIMS - NUM_DIMS_DEPENDENT))
+		// 	isDSEComplete = true;
 
 		// Signal that DSE is complete after this configuration.
-		if (currentlyExploringDim == (NUM_DIMS - NUM_DIMS_DEPENDENT))
+		if (traversalList == finishedState)
 			isDSEComplete = true;
 	}
 	return nextconfiguration;
