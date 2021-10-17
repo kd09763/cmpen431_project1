@@ -28,6 +28,7 @@ using namespace std;
  * Feel free to create more global variables to track progress of your
  * heuristic.
  */
+bool newDim = true;
 unsigned int currentlyExploringDim = 0;
 bool currentDimDone = false;
 bool isDSEComplete = false;
@@ -101,7 +102,7 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 
 		// Check if DSE has been completed before and return current
 		// configuration.
-		if(isDSEComplete) {
+		if(isDSEComplete == true) {
 			return currentconfiguration;
 		}
 
@@ -122,12 +123,22 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 
 		// Handling for currently exploring dimension. This is a very dumb
 		// implementation.
-		int nextValue = extractConfigPararm(nextconfiguration, dimesionOrderMap[currentlyExploringDim]) + 1;
+		int nextValue;
+		if(newDim == true){
+			nextValue = 0;
+			newDim = false;
+		}
+		else{
+			nextValue = extractConfigPararm(nextconfiguration, dimesionOrderMap[currentlyExploringDim]) + 1;
+		}		
+
+
 
 		if (nextValue >= GLOB_dimensioncardinality[dimesionOrderMap[currentlyExploringDim]]) {
 			nextValue = GLOB_dimensioncardinality[dimesionOrderMap[currentlyExploringDim]] - 1;
 			//currentDimDone = true;
 			traversalList[dimesionOrderMap[currentlyExploringDim]] = true;
+			newDim = true;
 		}
 
 		ss << nextValue << " ";
@@ -139,7 +150,7 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 		// }
 
 		// Fill in the dimensions already-scanned with the already-selected best value.
-		for (int dim = dimesionOrderMap[currentlyExploringDim] + 1; dim < NUM_DIMS; ++dim) {
+		for (int dim = dimesionOrderMap[currentlyExploringDim] + 1; dim < NUM_DIMS - NUM_DIMS_DEPENDENT; ++dim) {
 			ss << extractConfigPararm(bestConfig, dim) << " ";
 		}
 
@@ -156,19 +167,17 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 		// Configuration is ready now.
 		nextconfiguration = ss.str();
 
-		// // Make sure we start exploring next dimension in next iteration.
-		// if (traversalList[dimesionOrderMap[currentlyExploringDim]]) {
-		// 	currentlyExploringDim++;
-		// 	currentDimDone = false;
-		// }
+		// Make sure we start exploring next dimension in next iteration.
+		if (traversalList[dimesionOrderMap[currentlyExploringDim]]) {
+		 	currentlyExploringDim++;
+		 }
 
-		// // Signal that DSE is complete after this configuration.
-		// if (currentlyExploringDim == (NUM_DIMS - NUM_DIMS_DEPENDENT))
-		// 	isDSEComplete = true;
-
-		// Signal that DSE is complete after this configuration.
-		if (traversalList == finishedState)
-			isDSEComplete = true;
+		isDSEComplete = true;
+		for(int i = 0; i < 15; i++){
+			if(isDSEComplete == true && traversalList[i] != finishedState[i]){
+				isDSEComplete = false;
+			}
+		}
 	}
 	return nextconfiguration;
 }
