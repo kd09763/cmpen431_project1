@@ -227,7 +227,7 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 
 	std::string nextconfiguration = currentconfiguration;
 	// Continue if proposed configuration is invalid or has been seen/checked before.
-	while (!validateConfiguration(nextconfiguration) || GLOB_seen_configurations[nextconfiguration]) {
+	while (GLOB_seen_configurations[nextconfiguration]) {
 
 		// Check if DSE has been completed before and return current
 		// configuration.
