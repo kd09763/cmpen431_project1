@@ -32,9 +32,9 @@ bool newDim = true;
 unsigned int currentlyExploringDim = 0;
 bool currentDimDone = false;
 bool isDSEComplete = false;
-bool traversalList[14] = { false, false, false, false, false, false, false, false, false, false, false, false, false, false };
-bool finishedState[14] = { true, true, true, true, true, true, true, true, true, true, true, true, true, true };
-int dimesionOrderMap[14] = { 2,3,4,5,7,8,9,10,12,13,14,11,0,1 }; // For Cache -> BP -> FPU -> CORE
+bool traversalList[15] = { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false };
+bool finishedState[15] = { true, true, true, true, true, true, true, true, true, true, true, true, true, true, true };
+int dimesionOrderMap[15] = { 2,3,4,5,6,7,8,9,10,12,13,14,11,0,1 }; // For Cache -> BP -> FPU -> CORE
 
 // all sizes in bytes
 unsigned int getdl1size2(std::string configuration) {
