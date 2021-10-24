@@ -192,15 +192,17 @@ std::string generateCacheLatencyParams(string halfBakedConfig) {
 			break;
 	}
 
-	stringstream ss;
-	ss << 1;
-	ss >> string1;
+	stringstream ss1;
+	ss1 << 1;
+	ss1 >> string1;
 
-	ss << 1;
-	ss >> string2;
+	stringstream ss2;
+	ss2 << 1;
+	ss2 >> string2;
 
-	ss << 1;
-	ss >> string3;
+	stringstream ss3;
+	ss3 << 1;
+	ss3 >> string3;
 
 
 	// This is a dumb implementation.
