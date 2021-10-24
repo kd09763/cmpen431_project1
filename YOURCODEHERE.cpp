@@ -216,7 +216,6 @@ std::string generateCacheLatencyParams(string halfBakedConfig) {
  * Returns 1 if configuration is valid, else 0
  */
 int validateConfiguration(std::string configuration) {
-	int valid = 1;
 	int ifq = extractConfigPararm(configuration, 0);
 	int il1BlockSize = extractConfigPararm(configuration, 2);
 	int ul2BlockSize = extractConfigPararm(configuration, 8);
@@ -234,7 +233,7 @@ int validateConfiguration(std::string configuration) {
 
 	bool check5 = 32768 <= UL2CacheSize <= 1048576;
 	
-	return(isNumDimConfiguration(configuration) && check1 && check2 && check3 && check4);
+	return(isNumDimConfiguration(configuration) && check1 && check2 && check3 && check4 && check5);
 }
 
 /*
@@ -336,12 +335,12 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 		 	currentlyExploringDim++;
 		 }
 
-		// isDSEComplete = true;
-		// for(int i = 0; i < 15; i++){
-		// 	if(traversalList[i] != finishedState[i]){
-		// 		isDSEComplete = false;
-		// 	}
-		// }
+		isDSEComplete = true;
+		for(int i = 0; i < 15; i++){
+			if(traversalList[i] != finishedState[i]){
+				isDSEComplete = false;
+			}
+		}
 	}
 	return nextconfiguration;
 }
