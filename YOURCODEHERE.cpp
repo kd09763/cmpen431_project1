@@ -90,43 +90,43 @@ std::string generateCacheLatencyParams(string halfBakedConfig) {
 
 	switch(IL1CacheSize) {
 		case 2048: 
-			il1Lat += 1;
+			il1Lat += 0;
 			break;
 		case 4096: 
-			il1Lat += 2;
+			il1Lat += 1;
 			break;
 		case 8192: 
-			il1Lat += 3;
+			il1Lat += 2;
 			break;
 		case 16384: 
-			il1Lat += 4;
+			il1Lat += 3;
 			break;
 		case 32768: 
-			il1Lat += 5;
+			il1Lat += 4;
 			break;
 		case 65536: 
-			il1Lat += 6;
+			il1Lat += 5;
 			break;
 	}
 
 	switch(DL1CacheSize) {
 		case 2048: 
-			dl1Lat += 1;
+			dl1Lat += 0;
 			break;
 		case 4096: 
-			dl1Lat += 2;
+			dl1Lat += 1;
 			break;
 		case 8192: 
-			dl1Lat += 3;
+			dl1Lat += 2;
 			break;
 		case 16384: 
-			dl1Lat += 4;
+			dl1Lat += 3;
 			break;
 		case 32768: 
-			dl1Lat += 5;
+			dl1Lat += 4;
 			break;
 		case 65536: 
-			dl1Lat += 6;
+			dl1Lat += 5;
 			break;
 	}
 
