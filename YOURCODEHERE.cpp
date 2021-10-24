@@ -78,10 +78,10 @@ std::string generateCacheLatencyParams(string halfBakedConfig) {
 	string string2;
 	string string3;
 
-
-	int IL1CacheSize = getil1size2(halfBakedConfig);
-	int DL1CacheSize = getdl1size2(halfBakedConfig);
-	int UL2CacheSize = getl2size2(halfBakedConfig);
+ 
+	int IL1CacheSize = getil1size2(halfBakedConfig + " 1 1 1");
+	int DL1CacheSize = getdl1size2(halfBakedConfig + " 1 1 1");
+	int UL2CacheSize = getl2size2(halfBakedConfig + " 1 1 1");
 
 	int il1Assoc = extractConfigPararm(halfBakedConfig, 6);
 	int dl1Assoc = extractConfigPararm(halfBakedConfig, 4);
