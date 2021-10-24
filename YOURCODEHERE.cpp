@@ -70,9 +70,9 @@ unsigned int getl2size2(std::string configuration) {
 std::string generateCacheLatencyParams(string halfBakedConfig) {
 
 	string latencySettings;
-	int il1Lat;
-	int dl1Lat;
-	int ul2Lat;
+	int il1Lat = 0;
+	int dl1Lat = 0;
+	int ul2Lat = 0;
 
 	string string1;
 	string string2;
