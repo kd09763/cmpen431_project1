@@ -14,6 +14,7 @@
 #include <iterator>
 
 #include "431project.h"
+#include "431projectUtils.cpp"
 
 using namespace std;
 
@@ -43,20 +44,101 @@ int dimesionOrderMap[15] = { 2,3,4,5,6,7,8,9,10,12,13,14,11,0,1 }; // For Cache 
  * 
  * Returns a string similar to "1 1 1"
  */
-std::string generateCacheLatencyParams(string halfBackedConfig) {
+std::string generateCacheLatencyParams(string halfBakedConfig) {
 
 	string latencySettings;
+	int il1Lat;
+	int dl1Lat;
+	int ul2Lat;
 
-	//
-	//YOUR CODE BEGINS HERE
-	//
+
+	int IL1CacheSize = getil1size(halfBakedConfig);
+	int DL1CacheSize = getdl1size(halfBakedConfig);
+	int UL2CacheSize = getl2size(halfBakedConfig);
+
+	int il1Assoc = extractConfigPararm(halfBakedConfig, 6);
+	int dl1Assoc = extractConfigPararm(halfBakedConfig, 4);
+	int ul2Assoc = extractConfigPararm(halfBakedConfig, 9);
+
+	switch(il1Assoc) {
+		case 0: 
+			il1Lat += 0;
+		case 1: 
+			il1Lat += 1;
+		case 2: 
+			il1Lat += 2;
+	}
+
+	switch(dl1Assoc) {
+		case 0: 
+			il1Lat += 0;
+		case 1: 
+			il1Lat += 1;
+		case 2: 
+			il1Lat += 2;
+	}
+
+	switch(il1Assoc) {
+		case 0: 
+			il1Lat += 0;
+		case 1: 
+			il1Lat += 1;
+		case 2: 
+			il1Lat += 2;
+		case 3: 
+			il1Lat += 3;
+		case 4: 
+			il1Lat += 4;
+	}
+
+	switch(IL1CacheSize) {
+		case 2: 
+			il1Lat += 1;
+		case 4: 
+			il1Lat += 2;
+		case 8: 
+			il1Lat += 3;
+		case 16: 
+			il1Lat += 4;
+		case 32: 
+			il1Lat += 5;
+		case 64: 
+			il1Lat += 6;
+	}
+
+	switch(DL1CacheSize) {
+		case 0: 
+			il1Lat += 0;
+		case 1: 
+			il1Lat += 1;
+		case 2: 
+			il1Lat += 2;
+		case 3: 
+			il1Lat += 3;
+		case 4: 
+			il1Lat += 4;
+	}
+
+	switch(UL2CacheSize) {
+		case 0: 
+			il1Lat += 0;
+		case 1: 
+			il1Lat += 1;
+		case 2: 
+			il1Lat += 2;
+		case 3: 
+			il1Lat += 3;
+		case 4: 
+			il1Lat += 4;
+		case 5: 
+			il1Lat += 5;
+	}
+
+
 
 	// This is a dumb implementation.
-	latencySettings = "1 1 1";
-
-	//
-	//YOUR CODE ENDS HERE
-	//
+	latencySettings = to_string(il1Lat) + " " + to_string(dl1Lat) + " " + to_string(ul2Lat);
+	//latencySettings = "1 1 1";
 
 	return latencySettings;
 }
@@ -65,12 +147,25 @@ std::string generateCacheLatencyParams(string halfBackedConfig) {
  * Returns 1 if configuration is valid, else 0
  */
 int validateConfiguration(std::string configuration) {
+	int valid = 1;
+	int ifq = extractConfigPararm(configuration, 0);
+	int il1BlockSize = extractConfigPararm(configuration, 2);
+	int ul2BlockSize = extractConfigPararm(configuration, 8);
+	int IL1CacheSize = getil1size(configuration);
+	int DL1CacheSize = getdl1size(configuration);
+	int UL2CacheSize = getl2size(configuration);
 
-	// FIXME - YOUR CODE HERE
+	bool check1 = il1BlockSize >= ifq;
 
-	// The below is a necessary, but insufficient condition for validating a
-	// configuration.
-	return isNumDimConfiguration(configuration);
+	bool check2 = (2*ul2BlockSize) >= il1BlockSize;
+
+	bool check3 = 2048 <= IL1CacheSize <= 65536;
+
+	bool check4 = 2048 <= DL1CacheSize <= 65536;
+
+	bool check5 = 32768 <= UL2CacheSize <= 1048576;
+	
+	return(isNumDimConfiguration(configuration) && check1 && check2 && check3 && check4);
 }
 
 /*
