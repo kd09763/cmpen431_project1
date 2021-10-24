@@ -69,7 +69,7 @@ unsigned int getl2size2(std::string configuration) {
  */
 std::string generateCacheLatencyParams(string halfBakedConfig) {
 
-	std::string latencySettings;
+	string latencySettings;
 	int il1Lat;
 	int dl1Lat;
 	int ul2Lat;
@@ -98,24 +98,24 @@ std::string generateCacheLatencyParams(string halfBakedConfig) {
 
 	switch(dl1Assoc) {
 		case 0: 
-			il1Lat += 0;
+			dl1Lat += 0;
 		case 1: 
-			il1Lat += 1;
+			dl1Lat += 1;
 		case 2: 
-			il1Lat += 2;
+			dl1Lat += 2;
 	}
 
-	switch(il1Assoc) {
+	switch(ul2Assoc) {
 		case 0: 
-			il1Lat += 0;
+			ul2Lat += 0;
 		case 1: 
-			il1Lat += 1;
+			ul2Lat += 1;
 		case 2: 
-			il1Lat += 2;
+			ul2Lat += 2;
 		case 3: 
-			il1Lat += 3;
+			ul2Lat += 3;
 		case 4: 
-			il1Lat += 4;
+			ul2Lat += 4;
 	}
 
 	switch(IL1CacheSize) {
@@ -135,30 +135,30 @@ std::string generateCacheLatencyParams(string halfBakedConfig) {
 
 	switch(DL1CacheSize) {
 		case 0: 
-			il1Lat += 0;
+			dl1Lat += 0;
 		case 1: 
-			il1Lat += 1;
+			dl1Lat += 1;
 		case 2: 
-			il1Lat += 2;
+			dl1Lat += 2;
 		case 3: 
-			il1Lat += 3;
+			dl1Lat += 3;
 		case 4: 
-			il1Lat += 4;
+			dl1Lat += 4;
 	}
 
 	switch(UL2CacheSize) {
 		case 0: 
-			il1Lat += 0;
+			ul2Lat += 0;
 		case 1: 
-			il1Lat += 1;
+			ul2Lat += 1;
 		case 2: 
-			il1Lat += 2;
+			ul2Lat += 2;
 		case 3: 
-			il1Lat += 3;
+			ul2Lat += 3;
 		case 4: 
-			il1Lat += 4;
+			ul2Lat += 4;
 		case 5: 
-			il1Lat += 5;
+			ul2Lat += 5;
 	}
 
 	stringstream ss;
@@ -172,7 +172,6 @@ std::string generateCacheLatencyParams(string halfBakedConfig) {
 
 	// This is a dumb implementation.
 	latencySettings = string1 + " " + string2 + " " + string3;
-	cout << string1;
 	//latencySettings = "1 1 1";
 
 	return latencySettings;
