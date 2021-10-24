@@ -74,6 +74,10 @@ std::string generateCacheLatencyParams(string halfBakedConfig) {
 	int dl1Lat;
 	int ul2Lat;
 
+	string string1;
+	string string2;
+	string string3;
+
 
 	int IL1CacheSize = getil1size(halfBakedConfig);
 	int DL1CacheSize = getdl1size(halfBakedConfig);
@@ -157,10 +161,17 @@ std::string generateCacheLatencyParams(string halfBakedConfig) {
 			il1Lat += 5;
 	}
 
+	stringstream ss;
+	ss << il1Lat;
+	ss >> string1;
+	ss << dl1Lat;
+	ss >> string2;
+	ss << ul2Lat;
+	ss >> string3;
 
 
 	// This is a dumb implementation.
-	latencySettings = std::to_string(il1Lat) + " " + std::to_string(dl1Lat) + " " + std::to_string(ul2Lat);
+	latencySettings = string1 + " " + string2 + " " + string3;
 	//latencySettings = "1 1 1";
 
 	return latencySettings;
