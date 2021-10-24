@@ -336,8 +336,8 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 		 }
 
 		isDSEComplete = true;
-		for(int i = 0; i < 14; i++){
-			if(isDSEComplete == true && traversalList[i] != finishedState[i]){
+		for(int i = 0; i < 15; i++){
+			if(traversalList[i] != finishedState[i]){
 				isDSEComplete = false;
 			}
 		}
