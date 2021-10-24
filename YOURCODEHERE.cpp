@@ -336,12 +336,12 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 		 	currentlyExploringDim++;
 		 }
 
-		isDSEComplete = true;
-		for(int i = 0; i < 15; i++){
-			if(traversalList[i] != finishedState[i]){
-				isDSEComplete = false;
-			}
-		}
+		// isDSEComplete = true;
+		// for(int i = 0; i < 15; i++){
+		// 	if(traversalList[i] != finishedState[i]){
+		// 		isDSEComplete = false;
+		// 	}
+		// }
 	}
 	return nextconfiguration;
 }
