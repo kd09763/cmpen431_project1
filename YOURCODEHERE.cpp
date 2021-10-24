@@ -193,21 +193,20 @@ std::string generateCacheLatencyParams(string halfBakedConfig) {
 	}
 
 	stringstream ss1;
-	ss1 << 1;
+	ss1 << il1Lat;
 	ss1 >> string1;
 
 	stringstream ss2;
-	ss2 << 1;
+	ss2 << dl1Lat;
 	ss2 >> string2;
 
 	stringstream ss3;
-	ss3 << 1;
+	ss3 << ul2Lat;
 	ss3 >> string3;
 
 
 	// This is a dumb implementation.
 	latencySettings = string1 + " " + string2 + " " + string3;
-	cout << latencySettings << "ddddd" << string1 << "ddddd" << string2 << "ddddd" << string3;
 
 	return latencySettings;
 }
