@@ -14,7 +14,6 @@
 #include <iterator>
 
 #include "431project.h"
-#include "431projectUtils.cpp"
 
 using namespace std;
 
@@ -36,6 +35,30 @@ bool isDSEComplete = false;
 bool traversalList[15] = { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false };
 bool finishedState[15] = { true, true, true, true, true, true, true, true, true, true, true, true, true, true, true };
 int dimesionOrderMap[15] = { 2,3,4,5,6,7,8,9,10,12,13,14,11,0,1 }; // For Cache -> BP -> FPU -> CORE
+
+// all sizes in bytes
+unsigned int getdl1size(std::string configuration) {
+	unsigned int dl1sets = 32 << extractConfigPararm(configuration, 3);
+	unsigned int dl1assoc = 1 << extractConfigPararm(configuration, 4);
+	unsigned int dl1blocksize = 8
+			* (1 << extractConfigPararm(configuration, 2));
+	return dl1assoc * dl1sets * dl1blocksize;
+}
+
+unsigned int getil1size(std::string configuration) {
+	unsigned int il1sets = 32 << extractConfigPararm(configuration, 5);
+	unsigned int il1assoc = 1 << extractConfigPararm(configuration, 6);
+	unsigned int il1blocksize = 8
+			* (1 << extractConfigPararm(configuration, 2));
+	return il1assoc * il1sets * il1blocksize;
+}
+
+unsigned int getl2size(std::string configuration) {
+	unsigned int l2sets = 256 << extractConfigPararm(configuration, 7);
+	unsigned int l2blocksize = 16 << extractConfigPararm(configuration, 8);
+	unsigned int l2assoc = 1 << extractConfigPararm(configuration, 9);
+	return l2assoc * l2sets * l2blocksize;
+}
 
 /*
  * Given a half-baked configuration containing cache properties, generate
