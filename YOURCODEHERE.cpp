@@ -12,7 +12,6 @@
 #include <fcntl.h>
 #include <vector>
 #include <iterator>
-#include <string>
  
 #include "431project.h"
 
@@ -70,7 +69,7 @@ unsigned int getl2size(std::string configuration) {
  */
 std::string generateCacheLatencyParams(string halfBakedConfig) {
 
-	string latencySettings;
+	std::string latencySettings;
 	int il1Lat;
 	int dl1Lat;
 	int ul2Lat;
@@ -161,7 +160,7 @@ std::string generateCacheLatencyParams(string halfBakedConfig) {
 
 
 	// This is a dumb implementation.
-	latencySettings = to_string(il1Lat) + " " + to_string(dl1Lat) + " " + to_string(ul2Lat);
+	latencySettings = std::to_string(il1Lat) + " " + std::to_string(dl1Lat) + " " + std::to_string(ul2Lat);
 	//latencySettings = "1 1 1";
 
 	return latencySettings;
