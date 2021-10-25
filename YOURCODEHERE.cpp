@@ -273,6 +273,8 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 				traversalList[i] = false;
 			}
 			isDSEComplete = false;
+			currentlyExploringDim = 0;
+			newDim = true;
 		}
 
 		std::stringstream ss;
