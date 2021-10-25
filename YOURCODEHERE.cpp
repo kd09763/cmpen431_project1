@@ -325,19 +325,20 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 		// Make sure we start exploring next dimension in next iteration.
 		if (traversalList[dimesionOrderMap[currentlyExploringDim]]) {
 			currentlyExploringDim++;
-			if(secondRun == false){
-				secondRun == true;
-				currentlyExploringDim = 0;
-				for(int i = 0; i < 15; i++){
-					traversalList[i] = false;
-				}
-			}
 		}
 
 		isDSEComplete = true;
 		for(int i = 0; i < 15; i++){
 			if(traversalList[i] != finishedState[i]){
 				isDSEComplete = false;
+			}
+		}
+
+		if (isDSEComplete && secondRun == false) {
+			secondRun == true;
+			currentlyExploringDim = 0;
+			for(int i = 0; i < 15; i++){
+				traversalList[i] = false;
 			}
 		}
 	}
