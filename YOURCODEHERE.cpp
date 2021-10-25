@@ -28,9 +28,7 @@ using namespace std;
  * Feel free to create more global variables to track progress of your
  * heuristic.
  */
-bool newDim = true;
 unsigned int currentlyExploringDim = 0;
-bool currentDimDone = false;
 bool isDSEComplete = false;
 bool traversalList[15] = { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false };
 bool finishedState[15] = { true, true, true, true, true, true, true, true, true, true, true, true, true, true, true };
@@ -273,7 +271,6 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 		}
 
 		std::stringstream ss;
-		std::stringstream ss2;
 
 		string bestConfig;
 		if (optimizeforEXEC == 1)
@@ -290,34 +287,17 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 
 		// Handling for currently exploring dimension. This is a very dumb
 		// implementation.
-		int nextValue;
-		if(newDim == true){
-			nextValue = 0;
-			newDim = false;
-		}
-		else{
-			nextValue = extractConfigPararm(nextconfiguration, dimesionOrderMap[currentlyExploringDim]) + 1;
-		}		
-
-
+		int nextValue = extractConfigPararm(nextconfiguration, dimesionOrderMap[currentlyExploringDim]) + 1;
 
 		if (nextValue >= GLOB_dimensioncardinality[dimesionOrderMap[currentlyExploringDim]]) {
 			nextValue = GLOB_dimensioncardinality[dimesionOrderMap[currentlyExploringDim]] - 1;
-			//currentDimDone = true;
 			traversalList[dimesionOrderMap[currentlyExploringDim]] = true;
-			newDim = true;
 		}
 
 		ss << nextValue << " ";
 
-		// // Fill in remaining independent params with 0.
-		// for (int dim = (currentlyExploringDim + 1);
-		// 		dim < (NUM_DIMS - NUM_DIMS_DEPENDENT); ++dim) {
-		// 	ss << "0 ";
-		// }
-
 		// Fill in the dimensions already-scanned with the already-selected best value.
-		for (int dim = dimesionOrderMap[currentlyExploringDim] + 1; dim < NUM_DIMS - NUM_DIMS_DEPENDENT; ++dim) {
+		for (int dim = dimesionOrderMap[dimesionOrderMap[currentlyExploringDim]] + 1; dim < NUM_DIMS - NUM_DIMS_DEPENDENT; ++dim) {
 			ss << extractConfigPararm(bestConfig, dim) << " ";
 		}
 
@@ -336,8 +316,9 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 
 		// Make sure we start exploring next dimension in next iteration.
 		if (traversalList[dimesionOrderMap[currentlyExploringDim]]) {
-		 	currentlyExploringDim++;
-		 }
+			currentlyExploringDim++;
+			traversalList[dimesionOrderMap[currentlyExploringDim]] = false;
+		}
 
 		isDSEComplete = true;
 		for(int i = 0; i < 15; i++){
@@ -345,37 +326,6 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 				isDSEComplete = false;
 			}
 		}
-
-		if(isDSEComplete == true){
-
-			for (int dim = 0; dim < 2; ++dim) {
-				ss2 << extractConfigPararm(bestConfig, dim) << " ";
-			}
-		
-			ss2 << "0 ";
-
-			for (int dim = 3; dim < NUM_DIMS - NUM_DIMS_DEPENDENT; ++dim) {
-				ss2 << extractConfigPararm(bestConfig, dim) << " ";
-			}
-
-			string configSoFar2 = ss.str();
-
-			ss2 << generateCacheLatencyParams(configSoFar2);
-
-			string nextConfigurationForContinuing = ss.str();
-
-			if(GLOB_seen_configurations[nextConfigurationForContinuing]){
-				currentlyExploringDim = 0;
-				newDim = true;
-
-				for(int i = 0; i < 15; i++){
-					traversalList[i] = false;
-				}
-
-				isDSEComplete = false;
-			}
-		}
 	}
 	return nextconfiguration;
 }
-
