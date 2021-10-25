@@ -31,6 +31,7 @@ using namespace std;
 unsigned int currentlyExploringDim = 0;
 bool isDSEComplete = false;
 bool newDim = true;
+bool secondRun = false;
 bool traversalList[15] = { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false };
 bool finishedState[15] = { true, true, true, true, true, true, true, true, true, true, true, true, true, true, true };
 int dimesionOrderMap[15] = { 2,3,4,5,6,7,8,9,10,12,13,14,11,0,1 }; // For Cache -> BP -> FPU -> CORE
@@ -324,6 +325,13 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 		// Make sure we start exploring next dimension in next iteration.
 		if (traversalList[dimesionOrderMap[currentlyExploringDim]]) {
 			currentlyExploringDim++;
+			if(secondRun == false){
+				secondRun == true;
+				currentlyExploringDim = 0;
+				for(int i = 0; i < 15; i++){
+					traversalList[i] = false;
+				}
+			}
 		}
 
 		isDSEComplete = true;
