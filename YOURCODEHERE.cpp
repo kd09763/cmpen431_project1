@@ -40,20 +40,19 @@ int liblock[4] = { 8,16,32,64 };
 int ul2block[4] = { 16,32,64,128 };
 
 // all sizes in bytes
-unsigned int getdl1size2(std::string configuration) {
-	unsigned int dl1sets = 32 << extractConfigPararm(configuration, 3);
-	unsigned int dl1assoc = 1 << extractConfigPararm(configuration, 4);
-	unsigned int dl1blocksize = 8
-			* (1 << extractConfigPararm(configuration, 2));
-	return dl1assoc * dl1sets * dl1blocksize;
-}
-
 unsigned int getil1size2(std::string configuration) {
 	unsigned int il1sets = 32 << extractConfigPararm(configuration, 5);
 	unsigned int il1assoc = 1 << extractConfigPararm(configuration, 6);
 	unsigned int il1blocksize = 8
 			* (1 << extractConfigPararm(configuration, 2));
 	return il1assoc * il1sets * il1blocksize;
+}
+
+unsigned int getdl1size2(std::string configuration) {
+	unsigned int dl1sets = 32 << extractConfigPararm(configuration, 3);
+	unsigned int dl1assoc = 1 << extractConfigPararm(configuration, 4);
+	unsigned int dl1blocksize = 8 * (1 << extractConfigPararm(configuration, 2));
+	return dl1assoc * dl1sets * dl1blocksize;
 }
 
 unsigned int getl2size2(std::string configuration) {
@@ -236,7 +235,7 @@ int validateConfiguration(std::string configuration) {
 	bool check4 = 2048 <= DL1CacheSize <= 65536;
 
 	bool check5 = 32768 <= UL2CacheSize <= 1048576;
-	
+	cout << DL1CacheSize << " ";
 	return(isNumDimConfiguration(configuration) && check1 && check2 && check3 && check4 && check5);
 }
 
