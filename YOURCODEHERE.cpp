@@ -229,7 +229,7 @@ int validateConfiguration(std::string configuration) {
 
 	bool check1 = liblock[il1BlockSize] >= 8*width[ifq];
 
-	bool check2 = (2*ul2block[ul2BlockSize]) >= liblock[il1BlockSize];
+	bool check2 = ul2block[ul2BlockSize] >= (2*liblock[il1BlockSize]);
 
 	bool check3 = 2048 <= IL1CacheSize <= 65536;
 
