@@ -237,7 +237,7 @@ int validateConfiguration(std::string configuration) {
 
 	bool check5 = 32768 <= UL2CacheSize <= 1048576;
 
-	cout << IL1CacheSize;
+	cout << IL1CacheSize << " ";
 	
 	return(isNumDimConfiguration(configuration) && check1 && check2 && check3 && check4 && check5);
 }
