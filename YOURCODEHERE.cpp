@@ -347,13 +347,14 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 		}
 
 		if(isDSEComplete == true){
-			for (int dim = 0; dim < 3; ++dim) {
-			ss2 << extractConfigPararm(bestConfig, dim) << " ";
+
+			for (int dim = 0; dim < 2; ++dim) {
+				ss2 << extractConfigPararm(bestConfig, dim) << " ";
 			}
 		
 			ss2 << "0 ";
 
-			for (int dim = 1; dim < NUM_DIMS - NUM_DIMS_DEPENDENT; ++dim) {
+			for (int dim = 3; dim < NUM_DIMS - NUM_DIMS_DEPENDENT; ++dim) {
 				ss2 << extractConfigPararm(bestConfig, dim) << " ";
 			}
 
@@ -370,9 +371,9 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 				for(int i = 0; i < 15; i++){
 					traversalList[i] = false;
 				}
+
+				isDSEComplete = false;
 			}
-			
-			isDSEComplete = false;
 		}
 	}
 	return nextconfiguration;
