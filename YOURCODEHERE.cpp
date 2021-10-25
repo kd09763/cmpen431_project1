@@ -230,11 +230,11 @@ int validateConfiguration(std::string configuration) {
 
 	bool check2 = ul2block[ul2BlockSize] >= (2*liblock[il1BlockSize]);
 
-	bool check3 = 2048 <= IL1CacheSize <= 65536;
+	bool check3 = (2048 <= IL1CacheSize) && (IL1CacheSize <= 65536);
 
-	bool check4 = 2048 <= DL1CacheSize <= 65536;
+	bool check4 = (2048 <= DL1CacheSize) && (DL1CacheSize <= 65536);
 
-	bool check5 = 32768 <= UL2CacheSize <= 1048576;
+	bool check5 = (32768 <= UL2CacheSize) && (UL2CacheSize <= 1048576);
 	cout << check4 << " ";
 	return(isNumDimConfiguration(configuration) && check1 && check2 && check3 && check4 && check5);
 }
