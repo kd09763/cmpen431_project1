@@ -36,8 +36,8 @@ bool traversalList[15] = { false, false, false, false, false, false, false, fals
 bool finishedState[15] = { true, true, true, true, true, true, true, true, true, true, true, true, true, true, true };
 int dimesionOrderMap[15] = { 2,3,4,5,6,7,8,9,10,12,13,14,11,0,1 }; // For Cache -> BP -> FPU -> CORE
 int width[4] = { 1,2,4,8 };
-int liblock[4] = { 8, 16, 32, 64 };
-int ul2block[4] = { 16, 32, 64, 128 };
+int liblock[4] = { 8,16,32,64 };
+int ul2block[4] = { 16,32,64,128 };
 
 // all sizes in bytes
 unsigned int getdl1size2(std::string configuration) {
@@ -227,7 +227,7 @@ int validateConfiguration(std::string configuration) {
 	int DL1CacheSize = getdl1size2(configuration); // Int in Bytes
 	int UL2CacheSize = getl2size2(configuration); // Int in Bytes
 
-	bool check1 = liblock[il1BlockSize] >= width[ifq];
+	bool check1 = liblock[il1BlockSize] >= 8*width[ifq];
 
 	bool check2 = (2*ul2block[ul2BlockSize]) >= liblock[il1BlockSize];
 
