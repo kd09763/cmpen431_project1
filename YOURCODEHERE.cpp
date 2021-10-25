@@ -324,10 +324,6 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 		// Make sure we start exploring next dimension in next iteration.
 		if (traversalList[dimesionOrderMap[currentlyExploringDim]]) {
 			currentlyExploringDim++;
-			if(currentlyExploringDim == 15){
-				currentlyExploringDim = 0;
-			}
-			traversalList[dimesionOrderMap[currentlyExploringDim]] = false;
 		}
 
 		isDSEComplete = true;
