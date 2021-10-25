@@ -371,6 +371,8 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 					traversalList[i] = false;
 				}
 			}
+			
+			isDSEComplete = false;
 		}
 	}
 	return nextconfiguration;
