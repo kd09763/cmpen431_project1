@@ -364,7 +364,7 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 
 			string nextConfigurationForContinuing = ss.str();
 
-			if(!GLOB_seen_configurations[nextConfigurationForContinuing]){
+			if(GLOB_seen_configurations[nextConfigurationForContinuing]){
 				currentlyExploringDim = 0;
 				newDim = true;
 
