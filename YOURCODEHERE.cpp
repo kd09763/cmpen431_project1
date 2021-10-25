@@ -269,15 +269,11 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 		// Check if DSE has been completed before and return current
 		// configuration.
 		if(isDSEComplete == true) {
-			for(int i = 0; i < 15; i++){
-				traversalList[i] = false;
-			}
-			isDSEComplete = false;
-			currentlyExploringDim = 0;
-			newDim = true;
+			return currentconfiguration;
 		}
 
 		std::stringstream ss;
+		std::stringstream ss2;
 
 		string bestConfig;
 		if (optimizeforEXEC == 1)
@@ -347,6 +343,33 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 		for(int i = 0; i < 15; i++){
 			if(traversalList[i] != finishedState[i]){
 				isDSEComplete = false;
+			}
+		}
+
+		if(isDSEComplete == true){
+			for (int dim = 0; dim < 3; ++dim) {
+			ss2 << extractConfigPararm(bestConfig, dim) << " ";
+			}
+		
+			ss2 << "0 ";
+
+			for (int dim = 1; dim < NUM_DIMS - NUM_DIMS_DEPENDENT; ++dim) {
+				ss2 << extractConfigPararm(bestConfig, dim) << " ";
+			}
+
+			string configSoFar2 = ss.str();
+
+			ss2 << generateCacheLatencyParams(configSoFar2);
+
+			string nextConfigurationForContinuing = ss.str();
+
+			if(!GLOB_seen_configurations[nextConfigurationForContinuing]){
+				currentlyExploringDim = 0;
+				newDim = true;
+
+				for(int i = 0; i < 15; i++){
+					traversalList[i] = false;
+				}
 			}
 		}
 	}
