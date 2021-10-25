@@ -334,14 +334,6 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 			}
 		}
 
-		if (isDSEComplete && secondRun == false) {
-			secondRun == true;
-			isDSEComplete = false;
-			currentlyExploringDim = 0;
-			for(int i = 0; i < 15; i++){
-				traversalList[i] = false;
-			}
-		}
 	}
 
 	return nextconfiguration;
