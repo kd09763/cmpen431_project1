@@ -235,9 +235,7 @@ int validateConfiguration(std::string configuration) {
 	bool check4 = 2048 <= DL1CacheSize <= 65536;
 
 	bool check5 = 32768 <= UL2CacheSize <= 1048576;
-	if(isNumDimConfiguration(configuration) && check1 && check2 && check3 && check4 && check5 == true){
-		cout << DL1CacheSize << " ";
-	}
+	cout << check4 << " ";
 	return(isNumDimConfiguration(configuration) && check1 && check2 && check3 && check4 && check5);
 }
 
