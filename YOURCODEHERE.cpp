@@ -334,6 +334,6 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 			}
 		}
 	}
-	cout << "\n" << nextconfiguration << "\n";
+
 	return nextconfiguration;
 }
