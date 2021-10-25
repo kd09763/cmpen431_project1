@@ -20,7 +20,7 @@ using namespace std;
 /*
  * Enter your PSU IDs here to select the appropriate scanning order.
  */
-#define PSU_ID_SUM (912345679+911111111)
+#define PSU_ID_SUM (972304058+905443829)
 
 /*
  * Some global variables to track heuristic progress.
@@ -35,6 +35,9 @@ bool isDSEComplete = false;
 bool traversalList[15] = { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false };
 bool finishedState[15] = { true, true, true, true, true, true, true, true, true, true, true, true, true, true, true };
 int dimesionOrderMap[15] = { 2,3,4,5,6,7,8,9,10,12,13,14,11,0,1 }; // For Cache -> BP -> FPU -> CORE
+int width[4] = { 1,2,4,8 };
+int liblock[4] = { 8, 16, 32, 64 };
+int ul2block[4] = { 16, 32, 64, 128 };
 
 // all sizes in bytes
 unsigned int getdl1size2(std::string configuration) {
@@ -216,16 +219,17 @@ std::string generateCacheLatencyParams(string halfBakedConfig) {
  * Returns 1 if configuration is valid, else 0
  */
 int validateConfiguration(std::string configuration) {
-	int ifq = extractConfigPararm(configuration, 0);
-	int il1BlockSize = extractConfigPararm(configuration, 2);
-	int ul2BlockSize = extractConfigPararm(configuration, 8);
-	int IL1CacheSize = getil1size2(configuration);
-	int DL1CacheSize = getdl1size2(configuration);
-	int UL2CacheSize = getl2size2(configuration);
+	int ifq = extractConfigPararm(configuration, 0); // Index
+	int il1BlockSize = extractConfigPararm(configuration, 2); // Index
+	int ul2BlockSize = extractConfigPararm(configuration, 8); // Index
 
-	bool check1 = il1BlockSize >= ifq;
+	int IL1CacheSize = getil1size2(configuration); // Int in Bytes
+	int DL1CacheSize = getdl1size2(configuration); // Int in Bytes
+	int UL2CacheSize = getl2size2(configuration); // Int in Bytes
 
-	bool check2 = (2*ul2BlockSize) >= il1BlockSize;
+	bool check1 = liblock[il1BlockSize] >= width[ifq];
+
+	bool check2 = (2*ul2block[ul2BlockSize]) >= liblock[il1BlockSize];
 
 	bool check3 = 2048 <= IL1CacheSize <= 65536;
 
