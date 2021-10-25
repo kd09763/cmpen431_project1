@@ -235,7 +235,7 @@ int validateConfiguration(std::string configuration) {
 	bool check4 = (2048 <= DL1CacheSize) && (DL1CacheSize <= 65536);
 
 	bool check5 = (32768 <= UL2CacheSize) && (UL2CacheSize <= 1048576);
-	cout << check4 << " ";
+
 	return(isNumDimConfiguration(configuration) && check1 && check2 && check3 && check4 && check5);
 }
 
@@ -269,7 +269,10 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 		// Check if DSE has been completed before and return current
 		// configuration.
 		if(isDSEComplete == true) {
-			return currentconfiguration;
+			for(int i = 0; i < 15; i++){
+				traversalList[i] = false;
+			}
+			isDSEComplete = false;
 		}
 
 		std::stringstream ss;
