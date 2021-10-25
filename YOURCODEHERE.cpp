@@ -30,6 +30,7 @@ using namespace std;
  */
 unsigned int currentlyExploringDim = 0;
 bool isDSEComplete = false;
+bool newDim = true;
 bool traversalList[15] = { false, false, false, false, false, false, false, false, false, false, false, false, false, false, false };
 bool finishedState[15] = { true, true, true, true, true, true, true, true, true, true, true, true, true, true, true };
 int dimesionOrderMap[15] = { 2,3,4,5,6,7,8,9,10,12,13,14,11,0,1 }; // For Cache -> BP -> FPU -> CORE
@@ -289,15 +290,21 @@ std::string generateNextConfigurationProposal(std::string currentconfiguration,
 		// implementation.
 		int nextValue = extractConfigPararm(nextconfiguration, dimesionOrderMap[currentlyExploringDim]) + 1;
 
+		if(newDim == true){
+			nextValue = 0;
+			newDim = false;
+		}
+
 		if (nextValue >= GLOB_dimensioncardinality[dimesionOrderMap[currentlyExploringDim]]) {
 			nextValue = GLOB_dimensioncardinality[dimesionOrderMap[currentlyExploringDim]] - 1;
 			traversalList[dimesionOrderMap[currentlyExploringDim]] = true;
+			newDim = true;
 		}
 
 		ss << nextValue << " ";
 
 		// Fill in the dimensions already-scanned with the already-selected best value.
-		for (int dim = dimesionOrderMap[dimesionOrderMap[currentlyExploringDim]] + 1; dim < NUM_DIMS - NUM_DIMS_DEPENDENT; ++dim) {
+		for (int dim = dimesionOrderMap[currentlyExploringDim] + 1; dim < NUM_DIMS - NUM_DIMS_DEPENDENT; ++dim) {
 			ss << extractConfigPararm(bestConfig, dim) << " ";
 		}
 
